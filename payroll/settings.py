@@ -84,6 +84,18 @@ WSGI_APPLICATION = 'payroll.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd659cg123opfqk',
+        'USER': 'bcvojiwrzqpews',
+        'PASSWORD': '9e54c12942fba9764750f42cea43ff0a2b485b26a7530797ffaec0f9f3182217',
+        'HOST': 'ec2-23-23-110-26.compute-1.amazonaws.com',
+        'PORT': '5432',
+    }
+}
+
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'payroll',
         'USER': 'postgres',
         'PASSWORD': 'GsA001',
@@ -91,7 +103,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
