@@ -62,7 +62,7 @@ class PayrollComponent(models.Model):
 
 
 class PayrollComponentDtl(models.Model):
-    payrollComponent = models.ForeignKey(PayrollComponent, related_name='payrollcomponentdtls')
+    payrollComponent = models.ForeignKey(PayrollComponent, related_name='payrollcomponentdtls', on_delete=models.CASCADE)
     descs = models.CharField(max_length=150)
     calcType = models.CharField(max_length=1, choices=CALC_CHOICES)
     amount = models.DecimalField(max_digits=21,decimal_places=2)
