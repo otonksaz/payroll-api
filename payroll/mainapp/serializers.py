@@ -78,7 +78,7 @@ class PayrollComponentSerializer(serializers.ModelSerializer):
         payrollComponentDtls_data = validated_data.pop('payrollComponentDtls')
         payrollComponent = PayrollComponent.objects.create(**validated_data)
         for payrollComponentDtl_data in payrollComponentDtls_data:
-            PayrollComponentDtl.objects.create(payrollComponent, **payrollComponentDtl_data)
+            PayrollComponentDtl.objects.create(payrollComponent=payrollComponent, **payrollComponentDtl_data)
         return payrollComponent
 
     @atomic()
