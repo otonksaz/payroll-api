@@ -47,3 +47,8 @@ class PayrollComponentViewSet(viewsets.ModelViewSet):
 class PayrollComponentDtlViewSet(viewsets.ModelViewSet):
     queryset = PayrollComponentDtl.objects.all()
     serializer_class = PayrollComponentDtlSerializer
+
+
+class ProRateViewSet(viewsets.ModelViewSet):
+    queryset = ProRate.objects.all()
+    serializer_class = ProRateSerializer

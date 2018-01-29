@@ -12,6 +12,17 @@ CALC_CHOICES = (
         ('P', 'Percentage'),
     )
 
+PRORATEVAL_CHOICES = (
+        ('W', 'Working Days'),
+        ('C', 'Calendar Days'),
+    )
+
+PRORATEDIVIDER_CHOICES = (
+        ('W', 'Working Days'),
+        ('C', 'Calendar Days'),
+        ('X', 'Custom'),
+    )
+
 
 class Company(models.Model):
     companyCd = models.CharField(max_length=10, unique=True)
@@ -47,23 +58,44 @@ class JobLevel(models.Model):
         return self.name
 
 
+class ProRate(models.Model):
+    proRateCd = models.CharField(max_length=10, unique=True)
+    name = models.CharField(max_length=100)
+    proRateVal = models.CharField(max_length=1, choices=PRORATEVAL_CHOICES)
+    proRateValCus = models.IntegerField()
+    proRateDivider = models.CharField(max_length=1, choices=PRORATEDIVIDER_CHOICES)
+
+    def __str__(self):
+        return self.name
+
+
 class PayrollComponent(models.Model):
     componentCd = models.CharField(max_length=10, unique=True)
     name = models.CharField(max_length=100)
     intervalType = models.CharField(max_length=1, choices=INTERVAL_CHOICES)
-    proRate = models.BooleanField(default=True)
-    proRateVal = models.IntegerField()
     tax = models.BooleanField(default=True)
     absentDeduct = models.BooleanField(default=True)
     payrollDeduct = models.BooleanField(default=True)
+    compSubsidize = models.BooleanField()
+    proRate = models.ForeignKey(ProRate)
 
     def __str__(self):
         return self.name
 
 
 class PayrollComponentDtl(models.Model):
-    payrollComponent = models.ForeignKey(PayrollComponent, related_name='payrollcomponentdtls', on_delete=models.CASCADE)
+    payrollComponent = models.ForeignKey(PayrollComponent, related_name='payrollComponentDtls', on_delete=models.CASCADE)
     descs = models.CharField(max_length=150)
     calcType = models.CharField(max_length=1, choices=CALC_CHOICES)
-    amount = models.DecimalField(max_digits=21,decimal_places=2)
-    companyExpense = models.DecimalField(max_digits=21,decimal_places=2)
+    maxSalaryCalc = models.DecimalField(max_digits=21,decimal_places=2)
+    employeeVAl = models.DecimalField(max_digits=21,decimal_places=2)
+    companyVal = models.DecimalField(max_digits=21,decimal_places=2)
+
+
+class PayrollScheme(models.Model):
+    schemeCd = models.CharField(max_length=10, unique=True)
+    name = models.CharField(max_length=100)
+    payrollComponents = models.ManyToManyField(PayrollComponent)
+
+    def __str__(self):
+        return self.name
