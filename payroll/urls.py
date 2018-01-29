@@ -27,7 +27,7 @@ router.register(r'jobpositions', views.JobPositionViewSet, base_name='jobpositio
 router.register(r'joblevels', views.JobLevelViewSet, base_name='joblevel-view')
 router.register(r'payrollcomponents', views.PayrollComponentViewSet, base_name='payrollcomponent-view')
 router.register(r'payrollcomponentdtls', views.PayrollComponentDtlViewSet, base_name='payrollcomponentdtl-view')
-router.register(r'prorates', views.PayrollComponentDtlViewSet, base_name='prorate-view')
+router.register(r'prorates', views.ProRateViewSet, base_name='prorate-view')
 
 urlpatterns = [
     url(r'^', include(router.urls)),
