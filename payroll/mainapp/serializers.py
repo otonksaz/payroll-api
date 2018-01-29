@@ -58,6 +58,12 @@ class PayrollComponentDtlSerializer(serializers.ModelSerializer):
     class Meta:
         model = PayrollComponentDtl
         fields = '__all__'
+        extra_kwargs = {
+            "payrollComponent": {
+                "read_only": False,
+                "required": False,
+            }
+        }
 
 
 class PayrollComponentSerializer(serializers.ModelSerializer):
