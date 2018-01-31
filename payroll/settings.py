@@ -153,7 +153,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
-    )
+    ),
+    'EXCEPTION_HANDLER': 'payroll.mainapp.utils.custom_exception_handler'
 }
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
