@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="87bc3527-2f30-4094-92d6-6cc57ee5b07f" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/payroll/mainapp/utils.py" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/payroll/settings.py" afterPath="$PROJECT_DIR$/payroll/settings.py" />
+      <change beforePath="$PROJECT_DIR$/payroll/mainapp/models.py" afterPath="$PROJECT_DIR$/payroll/mainapp/models.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/payroll/mainapp/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1462">
-              <caret line="86" column="20" lean-forward="false" selection-start-line="86" selection-start-column="4" selection-end-line="86" selection-end-column="20" />
+            <state relative-caret-position="195">
+              <caret line="62" column="37" lean-forward="true" selection-start-line="62" selection-start-column="37" selection-end-line="62" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -40,7 +39,7 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/payroll/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="416">
+            <state relative-caret-position="2652">
               <caret line="156" column="33" lean-forward="false" selection-start-line="156" selection-start-column="33" selection-end-line="156" selection-end-column="33" />
               <folding />
             </state>
@@ -82,7 +81,7 @@
       <file leaf-file-name="serializers.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/payroll/mainapp/serializers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
+            <state relative-caret-position="1479">
               <caret line="90" column="49" lean-forward="false" selection-start-line="90" selection-start-column="49" selection-end-line="90" selection-end-column="49" />
               <folding>
                 <element signature="e#0#62#0" expanded="true" />
@@ -91,7 +90,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="utils.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/payroll/mainapp/utils.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="187">
@@ -119,12 +118,12 @@
         <option value="$PROJECT_DIR$/mainapp/models.py" />
         <option value="$PROJECT_DIR$/payroll/mainapp/serilizers.py" />
         <option value="$PROJECT_DIR$/payroll/wsgi.py" />
-        <option value="$PROJECT_DIR$/payroll/mainapp/models.py" />
         <option value="$PROJECT_DIR$/payroll/mainapp/views.py" />
         <option value="$PROJECT_DIR$/payroll/urls.py" />
         <option value="$PROJECT_DIR$/payroll/mainapp/serializers.py" />
         <option value="$PROJECT_DIR$/payroll/mainapp/utils.py" />
         <option value="$PROJECT_DIR$/payroll/settings.py" />
+        <option value="$PROJECT_DIR$/payroll/mainapp/models.py" />
       </list>
     </option>
   </component>
@@ -176,7 +175,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../urban/urban" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -639,17 +638,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/payroll/mainapp/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1462">
-          <caret line="86" column="20" lean-forward="false" selection-start-line="86" selection-start-column="4" selection-end-line="86" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/payroll/mainapp/serializers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
+        <state relative-caret-position="1479">
           <caret line="90" column="49" lean-forward="false" selection-start-line="90" selection-start-column="49" selection-end-line="90" selection-end-column="49" />
           <folding>
             <element signature="e#0#62#0" expanded="true" />
@@ -659,7 +650,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/payroll/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
+        <state relative-caret-position="2652">
           <caret line="156" column="33" lean-forward="false" selection-start-line="156" selection-start-column="33" selection-end-line="156" selection-end-column="33" />
           <folding />
         </state>
@@ -669,6 +660,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="25" lean-forward="false" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/payroll/mainapp/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="62" column="37" lean-forward="true" selection-start-line="62" selection-start-column="37" selection-end-line="62" selection-end-column="37" />
           <folding />
         </state>
       </provider>

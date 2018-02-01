@@ -62,7 +62,7 @@ class ProRate(models.Model):
     proRateCd = models.CharField(max_length=10, unique=True)
     name = models.CharField(max_length=100)
     proRateVal = models.CharField(max_length=1, choices=PRORATEVAL_CHOICES)
-    proRateValCus = models.IntegerField()
+    proRateDivCus = models.IntegerField()
     proRateDivider = models.CharField(max_length=1, choices=PRORATEDIVIDER_CHOICES)
 
     def __str__(self):
