@@ -2,26 +2,33 @@ from django.db import models
 
 
 INTERVAL_CHOICES = (
-        ('D', 'Day'),
-        ('M', 'Month'),
-        ('Y', 'Year')
-    )
+    ('D', 'Day'),
+    ('M', 'Month'),
+    ('Y', 'Year')
+)
 
 CALC_CHOICES = (
-        ('A', 'Amount'),
-        ('P', 'Percentage'),
-    )
+    ('A', 'Amount'),
+    ('P', 'Percentage'),
+)
 
 PRORATEVAL_CHOICES = (
-        ('W', 'Working Days'),
-        ('C', 'Calendar Days'),
-    )
+    ('W', 'Working Days'),
+    ('C', 'Calendar Days'),
+)
 
 PRORATEDIVIDER_CHOICES = (
-        ('W', 'Working Days'),
-        ('C', 'Calendar Days'),
-        ('X', 'Custom'),
-    )
+    ('W', 'Working Days'),
+    ('C', 'Calendar Days'),
+    ('X', 'Custom'),
+)
+
+TIMEOFFRESET_CHOICES = (
+    ('J', 'Join Date'),
+    ('E', 'Expiry'),
+    ('F', 'First Day Of Year'),
+    ('C', 'Custom Date'),
+)
 
 
 class Company(models.Model):
@@ -99,3 +106,20 @@ class PayrollScheme(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class TimeOffPolicy(models.Model):
+    timeOffCd = models.CharField(max_length=10, unique=True)
+    name = models.CharField(max_length=100)
+    resetBy = models.CharField(max_length=1, choices=TIMEOFFRESET_CHOICES)
+    customDate = models.DateField()
+    timeOffVal = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+
+
+class TimeOffScheme(models.Model):
+    schemeCd = models.CharField(max_length=10, unique=True)
+    name = models.CharField(max_length=100)
+    timeOffPolicies = models.ManyToManyField(TimeOffPolicy)

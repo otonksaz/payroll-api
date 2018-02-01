@@ -100,3 +100,9 @@ class PayrollComponentSerializer(serializers.ModelSerializer):
                 item['payrollComponent'] = instance
                 PayrollComponentDtl.objects.create(**item)
         return instance
+
+
+class TimeOffPolicySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TimeOffPolicy
+        fields = '__all__'

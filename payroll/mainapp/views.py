@@ -52,3 +52,7 @@ class PayrollComponentDtlViewSet(viewsets.ModelViewSet):
 class ProRateViewSet(viewsets.ModelViewSet):
     queryset = ProRate.objects.all()
     serializer_class = ProRateSerializer
+
+class TimeOffPolicyViewSet(viewsets.ModelViewSet):
+    queryset = TimeOffPolicy.objects.all()
+    serializer_class = TimeOffPolicySerializer
