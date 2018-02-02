@@ -84,7 +84,7 @@ class PayrollComponent(models.Model):
     absentDeduct = models.BooleanField(default=True)
     payrollDeduct = models.BooleanField(default=True)
     compSubsidize = models.BooleanField()
-    proRate = models.ForeignKey(ProRate)
+    proRate = models.ForeignKey(ProRate, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name

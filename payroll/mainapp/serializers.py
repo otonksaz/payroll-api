@@ -49,12 +49,17 @@ class JobLevelSerializer(serializers.ModelSerializer):
 
 
 class ProRateSerializer(serializers.ModelSerializer):
+    proRateValDescs = serializers.CharField(source='get_proRateVal_display', read_only=True)
+    proRateDividerDescs = serializers.CharField(source='get_proRateDivider_display', read_only=True)
+
     class Meta:
         model = ProRate
         fields = '__all__'
 
 
 class PayrollComponentDtlSerializer(serializers.ModelSerializer):
+    calcTypeDescs = serializers.CharField(source='get_calcType_display', read_only=True)
+
     class Meta:
         model = PayrollComponentDtl
         fields = '__all__'
@@ -67,6 +72,7 @@ class PayrollComponentDtlSerializer(serializers.ModelSerializer):
 
 
 class PayrollComponentSerializer(serializers.ModelSerializer):
+    intervalTypeDescs = serializers.CharField(source='get_intervalType_display', read_only=True)
     payrollComponentDtls = PayrollComponentDtlSerializer(many=True)
 
     class Meta:
@@ -102,7 +108,15 @@ class PayrollComponentSerializer(serializers.ModelSerializer):
         return instance
 
 
+class PayrollSchemeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PayrollScheme
+        fields = '__all__'
+
+
 class TimeOffPolicySerializer(serializers.ModelSerializer):
+    resetByDescs = serializers.CharField(source='get_resetBy_display', read_only=True)
+
     class Meta:
         model = TimeOffPolicy
         fields = '__all__'
