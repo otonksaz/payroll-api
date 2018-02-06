@@ -72,7 +72,7 @@ class PayrollComponentDtlSerializer(serializers.ModelSerializer):
 
 
 class PayrollComponentSerializer(serializers.ModelSerializer):
-    intervalTypeDescs = serializers.CharField(source='get_intervalType_display', read_only=True)
+    calcTypeDescs = serializers.CharField(source='get_calcType_display', read_only=True)
     payrollComponentDtls = PayrollComponentDtlSerializer(many=True)
 
     class Meta:
