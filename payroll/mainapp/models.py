@@ -1,10 +1,10 @@
 from django.db import models
 
 
-INTERVAL_CHOICES = (
-    ('D', 'Day'),
-    ('M', 'Month'),
-    ('Y', 'Year')
+CALCTYPE_CHOICES = (
+    ('D', 'Daily'),
+    ('W', 'Weekly'),
+    ('M', 'Monthly')
 )
 
 CALC_CHOICES = (
@@ -79,12 +79,12 @@ class ProRate(models.Model):
 class PayrollComponent(models.Model):
     componentCd = models.CharField(max_length=10, unique=True)
     name = models.CharField(max_length=100)
-    intervalType = models.CharField(max_length=1, choices=INTERVAL_CHOICES)
+    calcType = models.CharField(max_length=1, choices=CALCTYPE_CHOICES)
     tax = models.BooleanField(default=True)
     absentDeduct = models.BooleanField(default=True)
     payrollDeduct = models.BooleanField(default=True)
     compSubsidize = models.BooleanField()
-    proRate = models.ForeignKey(ProRate, on_delete=models.PROTECT)
+    proRate = models.ForeignKey(ProRate, on_delete=models.PROTECT, blank=True, null=True)
 
     def __str__(self):
         return self.name
