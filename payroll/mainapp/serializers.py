@@ -91,7 +91,7 @@ class PayrollComponentSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.componentCd = validated_data.get('componentCd', instance.componentCd)
         instance.name = validated_data.get('name', instance.name)
-        instance.intervalType = validated_data.get('intervalType', instance.intervalType)
+        instance.calcType = validated_data.get('calcType', instance.calcType)
         instance.tax = validated_data.get('tax', instance.tax)
         instance.absentDeduct = validated_data.get('absentDeduct', instance.absentDeduct)
         instance.payrollDeduct = validated_data.get('payrollDeduct', instance.payrollDeduct)
