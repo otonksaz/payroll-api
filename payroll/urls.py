@@ -27,8 +27,14 @@ router.register(r'jobpositions', views.JobPositionViewSet, base_name='jobpositio
 router.register(r'joblevels', views.JobLevelViewSet, base_name='joblevel-view')
 router.register(r'payrollcomponents', views.PayrollComponentViewSet, base_name='payrollcomponent-view')
 router.register(r'payrollcomponentdtls', views.PayrollComponentDtlViewSet, base_name='payrollcomponentdtl-view')
+router.register(r'payrollschemes', views.PayrollScheme, base_name='payrollscheme-view')
 router.register(r'prorates', views.ProRateViewSet, base_name='prorate-view')
 router.register(r'timeoffpolicies', views.TimeOffPolicyViewSet, base_name='timeoffpolicy-view')
+router.register(r'timeoffschemes', views.TimeOffScheme, base_name='timeoffscheme-view')
+router.register(r'overtimes', views.Overtime, base_name='overtime-view')
+router.register(r'overtimedtls', views.OvertimeDtl, base_name='Overtimedtl-view')
+router.register(r'taxsetups', views.TaxSetup, base_name='taxsetup-view')
+router.register(r'taxsetupdtls', views.TaxSetupDtl, base_name='taxsetupdtl-view')
 
 urlpatterns = [
     url(r'^', include(router.urls)),

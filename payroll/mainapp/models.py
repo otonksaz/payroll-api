@@ -12,6 +12,11 @@ CALC_CHOICES = (
     ('P', 'Percentage'),
 )
 
+OVER_CHOICES= (
+    ('N', 'Weekday'),
+    ('H', 'Weekend/Holiday'),
+)
+
 PRORATEVAL_CHOICES = (
     ('W', 'Working Days'),
     ('C', 'Calendar Days'),
@@ -102,7 +107,7 @@ class PayrollComponentDtl(models.Model):
 class PayrollScheme(models.Model):
     schemeCd = models.CharField(max_length=10, unique=True)
     name = models.CharField(max_length=100)
-    payrollComponents = models.ManyToManyField(PayrollComponent)
+    payrollComponent=models.ManyToManyField(PayrollComponent)
 
     def __str__(self):
         return self.name
@@ -122,4 +127,40 @@ class TimeOffPolicy(models.Model):
 class TimeOffScheme(models.Model):
     schemeCd = models.CharField(max_length=10, unique=True)
     name = models.CharField(max_length=100)
-    timeOffPolicies = models.ManyToManyField(TimeOffPolicy)
+    timeOffPolicy = models.ManyToManyField(TimeOffPolicy)
+
+    def __str__(self):
+        return self.name
+
+class Overtime(models.Model):
+    overtimeCd = models.CharField(max_length=10, unique=True)
+    name = models.CharField(max_length=100)
+    roundingMin = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+
+class OvertimeDtl(models.Model):
+    overtime = models.ForeignKey(Overtime,related_name='overtimeDtls', on_delete=models.CASCADE)
+    type = models.CharField(max_length=1, choices=OVER_CHOICES)
+    multplyFrom = models.DecimalField(max_digits=2, decimal_places=1)
+    multplyTo = models.DecimalField(max_digits=2, decimal_places=1)
+    multplyBy = models.DecimalField(max_digits=3, decimal_places=1)
+
+class TaxSetup(models.Model):
+    company=models.ForeignKey(Company, unique=True)
+    ptkpPribadi = models.DecimalField(max_digits=12, decimal_places=0)
+    ptkpIstri = models.DecimalField(max_digits=12, decimal_places=0)
+    ptkpTanggungan = models.DecimalField(max_digits=12, decimal_places=0)
+    maxTanggungan = models.IntegerField()
+    rounding = models.BooleanField()
+
+    def __str__(self):
+        return u'%s %s' % ('Tax-', self.company)
+
+class TaxSetupDtl(models.Model):
+    taxSetup = models.ForeignKey(TaxSetup,related_name='taxSetupDtls', on_delete=models.CASCADE)
+    salaryBottom = models.DecimalField(max_digits=12, decimal_places=0)
+    salaryTop = models.DecimalField(max_digits=12, decimal_places=0)
+    taxNpwp = models.DecimalField(max_digits=3, decimal_places=1)
+    taxNonNpwp = models.DecimalField(max_digits=3, decimal_places=1)

@@ -43,11 +43,9 @@ class PayrollComponentViewSet(viewsets.ModelViewSet):
     queryset = PayrollComponent.objects.all()
     serializer_class = PayrollComponentSerializer
 
-
 class PayrollComponentDtlViewSet(viewsets.ModelViewSet):
     queryset = PayrollComponentDtl.objects.all()
     serializer_class = PayrollComponentDtlSerializer
-
 
 class ProRateViewSet(viewsets.ModelViewSet):
     queryset = ProRate.objects.all()
@@ -56,3 +54,27 @@ class ProRateViewSet(viewsets.ModelViewSet):
 class TimeOffPolicyViewSet(viewsets.ModelViewSet):
     queryset = TimeOffPolicy.objects.all()
     serializer_class = TimeOffPolicySerializer
+
+class PayrollSchemeViewSet(viewsets.ModelViewSet):
+    queryset = PayrollScheme.objects.all()
+    serializer_class = PayrollSchemeSerializer
+
+class TimeOffSchemeViewSet(viewsets.ModelViewSet):
+    queryset = TimeOffScheme.objects.all()
+    serializer_class = TimeOffSchemeSerializer
+
+class OvertimeViewSet(viewsets.ModelViewSet):
+    queryset = Overtime.objects.all()
+    serializer_class = OvertimeSerializer
+
+class OvertimeDtlViewSet(viewsets.ModelViewSet):
+    queryset = OvertimeDtl.objects.all()
+    serializer_class = OvertimeDtlSerializer
+
+class TaxSetupViewSet(viewsets.ModelViewSet):
+    queryset = TaxSetup.objects.all()
+    serializer_class = TaxSetupSerializer
+
+class TaxSetupDtlViewSet(viewsets.ModelViewSet):
+    queryset = TaxSetupDtl.objects.all()
+    serializer_class = TaxSetupDtlSerializer
