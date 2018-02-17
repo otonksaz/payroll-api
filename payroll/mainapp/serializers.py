@@ -178,7 +178,7 @@ class TaxSetupDtlSerializer(serializers.ModelSerializer):
         model = TaxSetupDtl
         fields = '__all__'
         extra_kwargs = {
-            "TaxSetup": {
+            "taxSetup": {
                 "read_only": False,
                 "required": False,
             }
