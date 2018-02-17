@@ -84,10 +84,10 @@ WSGI_APPLICATION = 'payroll.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd659cg123opfqk',
-        'USER': 'bcvojiwrzqpews',
-        'PASSWORD': '9e54c12942fba9764750f42cea43ff0a2b485b26a7530797ffaec0f9f3182217',
-        'HOST': 'ec2-23-23-110-26.compute-1.amazonaws.com',
+        'NAME': 'dc9d48uul6db67',
+        'USER': 'xzsbvwuwixdnjv',
+        'PASSWORD': '3bc3409447ca660270caf75e2db1f34178e40d2ddaa63a44b688758febb317e8',
+        'HOST': 'ec2-107-22-175-33.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }
