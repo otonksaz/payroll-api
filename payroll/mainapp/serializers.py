@@ -137,7 +137,7 @@ class OvertimeDtlSerializer(serializers.ModelSerializer):
         model = OvertimeDtl
         fields = '__all__'
         extra_kwargs = {
-            "Overtime": {
+            "overtime": {
                 "read_only": False,
                 "required": False,
             }
@@ -145,7 +145,6 @@ class OvertimeDtlSerializer(serializers.ModelSerializer):
 
 class OvertimeSerializer(serializers.ModelSerializer):
     overtimeDtls = OvertimeDtlSerializer(many=True)
-
 
     class Meta:
         model = Overtime

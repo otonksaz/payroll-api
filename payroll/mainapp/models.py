@@ -143,9 +143,9 @@ class Overtime(models.Model):
 class OvertimeDtl(models.Model):
     overtime = models.ForeignKey(Overtime,related_name='overtimeDtls', on_delete=models.CASCADE)
     type = models.CharField(max_length=1, choices=OVER_CHOICES)
-    multplyFrom = models.DecimalField(max_digits=2, decimal_places=1)
-    multplyTo = models.DecimalField(max_digits=2, decimal_places=1)
-    multplyBy = models.DecimalField(max_digits=3, decimal_places=1)
+    multiplyFrom = models.DecimalField(max_digits=2, decimal_places=1)
+    multiplyTo = models.DecimalField(max_digits=2, decimal_places=1)
+    multiplyBy = models.DecimalField(max_digits=3, decimal_places=1)
 
 class TaxSetup(models.Model):
     company=models.ForeignKey(Company, unique=True)
