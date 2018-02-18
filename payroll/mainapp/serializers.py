@@ -195,7 +195,7 @@ class TaxSetupSerializer(serializers.ModelSerializer):
     @atomic()
     def create(self, validated_data):
         taxSetupDtls_data = validated_data.pop('taxSetupDtls')
-        taxSetup = Overtime.objects.create(**validated_data)
+        taxSetup = TaxSetup.objects.create(**validated_data)
         for taxSetupDtl_data in taxSetupDtls_data:
             TaxSetupDtl.objects.create(taxSetup=taxSetup, **taxSetupDtl_data)
         return taxSetup
