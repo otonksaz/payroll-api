@@ -186,7 +186,7 @@ class TaxSetupDtlSerializer(serializers.ModelSerializer):
 
 class TaxSetupSerializer(serializers.ModelSerializer):
     taxSetupDtls = TaxSetupDtlSerializer(many=True)
-
+    companyName = serializers.CharField(source='company.name', read_only=True)
 
     class Meta:
         model = TaxSetup
