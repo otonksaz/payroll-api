@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Count
 
 
 CALCTYPE_CHOICES = (
@@ -185,14 +186,22 @@ class AbsentPattern (models.Model):
     patternCd = models.CharField(max_length=10, unique=True)
     name = models.CharField(max_length=100)
 
+    @property
+    def noOfDaysIn(self):
+        return self.absentPatternDtls.filter(dayStatus='I').count()
+
+    @property
+    def noOfDaysOff(self):
+        return self.absentPatternDtls.filter(dayStatus='O').count()
+
     def __str__(self):
         return self.name
 
 class AbsentPatternDtl (models.Model):
+    absentPattern = models.ForeignKey(AbsentPattern, related_name='absentPatternDtls', on_delete=models.CASCADE)
     dayPeriod = models.IntegerField(choices=DAY_CHOICES)
     dayStatus =models.CharField(max_length=1, choices=DAYSTATUS_CHOICES)
     timeIn = models.TimeField()
     timeOut = models.TimeField()
     breakIn = models.TimeField()
     breakOut = models.TimeField()
-    absentPattern = models.ForeignKey(AbsentPattern,related_name='absentPatternDtls',on_delete=models.CASCADE)

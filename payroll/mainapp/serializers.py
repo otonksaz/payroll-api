@@ -232,7 +232,8 @@ class AbsentPatternDtlSerializer(serializers.ModelSerializer):
 
 class AbsentPatternSerializer(serializers.ModelSerializer):
     absentPatternDtls = AbsentPatternDtlSerializer(many=True)
-
+    noOfDaysIn = serializers.ReadOnlyField()
+    noOfDaysOff = serializers.ReadOnlyField()
 
     class Meta:
         model = AbsentPattern
