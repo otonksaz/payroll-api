@@ -35,6 +35,9 @@ router.register(r'overtimes', views.OvertimeViewSet, base_name='overtime-view')
 router.register(r'overtimedtls', views.OvertimeDtlViewSet, base_name='Overtimedtl-view')
 router.register(r'taxsetups', views.TaxSetupViewSet, base_name='taxsetup-view')
 router.register(r'taxsetupdtls', views.TaxSetupDtlViewSet, base_name='taxsetupdtl-view')
+router.register(r'absentpatterns', views.AbsentPatternViewSet, base_name='absentpattern-view')
+router.register(r'absentpatterndtls', views.AbsentPatternDtlViewSet, base_name='absentpatterndtl-view')
+
 
 urlpatterns = [
     url(r'^', include(router.urls)),

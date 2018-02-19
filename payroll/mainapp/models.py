@@ -35,6 +35,21 @@ TIMEOFFRESET_CHOICES = (
     ('C', 'Custom Date'),
 )
 
+DAY_CHOICES= (
+    (1, 'Monday'),
+    (2, 'Tueday'),
+    (3, 'Wednesday'),
+    (4, 'Thrusday'),
+    (5, 'Friday'),
+    (6, 'Saturday'),
+    (7, 'Sunday')
+)
+
+DAYSTATUS_CHOICES= (
+    ('I', 'In'),
+    ('O', 'Off')
+)
+
 
 class Company(models.Model):
     companyCd = models.CharField(max_length=10, unique=True)
@@ -148,7 +163,7 @@ class OvertimeDtl(models.Model):
     multiplyBy = models.DecimalField(max_digits=3, decimal_places=1)
 
 class TaxSetup(models.Model):
-    company=models.ForeignKey(Company, unique=True)
+    company=models.OneToOneField(Company,on_delete=models.CASCADE,primary_key=True)
     ptkpPribadi = models.DecimalField(max_digits=12, decimal_places=0)
     ptkpIstri = models.DecimalField(max_digits=12, decimal_places=0)
     ptkpTanggungan = models.DecimalField(max_digits=12, decimal_places=0)
@@ -164,3 +179,20 @@ class TaxSetupDtl(models.Model):
     salaryTop = models.DecimalField(max_digits=12, decimal_places=0)
     taxNpwp = models.DecimalField(max_digits=3, decimal_places=1)
     taxNonNpwp = models.DecimalField(max_digits=3, decimal_places=1)
+
+
+class AbsentPattern (models.Model):
+    patternCd = models.CharField(max_length=10, unique=True)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class AbsentPatternDtl (models.Model):
+    dayPeriod = models.IntegerField(choices=DAY_CHOICES)
+    dayStatus =models.CharField(max_length=1, choices=DAYSTATUS_CHOICES)
+    timeIn = models.TimeField()
+    timeOut = models.TimeField()
+    breakIn = models.TimeField()
+    breakOut = models.TimeField()
+    absentPattern = models.ForeignKey(AbsentPattern,related_name='absentPatternDtls',on_delete=models.CASCADE)

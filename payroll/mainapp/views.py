@@ -78,3 +78,11 @@ class TaxSetupViewSet(viewsets.ModelViewSet):
 class TaxSetupDtlViewSet(viewsets.ModelViewSet):
     queryset = TaxSetupDtl.objects.all()
     serializer_class = TaxSetupDtlSerializer
+
+class AbsentPatternViewSet(viewsets.ModelViewSet):
+    queryset = AbsentPattern.objects.all()
+    serializer_class = AbsentPatternSerializer
+
+class AbsentPatternDtlViewSet(viewsets.ModelViewSet):
+    queryset = AbsentPatternDtl.objects.all()
+    serializer_class = AbsentPatternDtlSerializer

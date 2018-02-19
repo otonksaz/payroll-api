@@ -217,3 +217,50 @@ class TaxSetupSerializer(serializers.ModelSerializer):
                 item['taxSetup'] = instance
                 TaxSetupDtl.objects.create(**item)
         return instance
+
+class AbsentPatternDtlSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AbsentPatternDtl
+        fields = '__all__'
+        extra_kwargs = {
+            "absentPattern": {
+                "read_only": False,
+                "required": False,
+            }
+        }
+
+
+class AbsentPatternSerializer(serializers.ModelSerializer):
+    absentPatternDtls = AbsentPatternDtlSerializer(many=True)
+
+
+    class Meta:
+        model = AbsentPattern
+        fields = '__all__'
+
+    @atomic()
+    def create(self, validated_data):
+        absentPatternDtls_data = validated_data.pop('absentPatternDtls')
+        absentPattern = AbsentPattern.objects.create(**validated_data)
+        for absentPatternDtl_data in absentPatternDtls_data:
+            AbsentPatternDtl.objects.create(absentPattern=absentPattern, **absentPatternDtl_data)
+        return absentPattern
+
+    @atomic()
+    def update(self, instance, validated_data):
+        instance.dayPeriod = validated_data.get('dayPeriod', instance.dayPeriod)
+        instance.dayStatus = validated_data.get('dayStatus', instance.dayStatus)
+        instance.timeIn = validated_data.get('timeIn', instance.timeIn)
+        instance.timeOut = validated_data.get('timeOut', instance.timeOut)
+        instance.breakIn = validated_data.get('breakIn', instance.breakIn)
+        instance.breakOut = validated_data.get('breakOut', instance.breakOut)
+        instance.absentPattern = validated_data.get('absentPattern', instance.absentPattern)
+        instance.save()
+        AbsentPatternDtl.objects.filter(absentPattern=instance).delete()
+        items = validated_data.get('absentPatternDtls')
+
+        if items:
+            for item in items:
+                item['absentPattern'] = instance
+                AbsentPatternDtl.objects.create(**item)
+        return instance
