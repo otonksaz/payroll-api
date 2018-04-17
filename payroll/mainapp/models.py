@@ -51,6 +51,30 @@ DAYSTATUS_CHOICES= (
     ('O', 'Off')
 )
 
+GENDER_CHOICES= (
+    ('M', 'Male'),
+    ('F', 'Female')
+)
+
+MARITAL_CHOICES= (
+    ('M', 'Married'),
+    ('S', 'Single'),
+    ('D', 'Divorced')
+)
+
+IDENTITY_CHOICES = (
+    ('K', 'KTP'),
+    ('S', 'SIM'),
+    ('F', 'KITAS')
+)
+
+RELIGION_CHOICES= (
+    ('IS', 'Islam'),
+    ('KP', 'Kristen Protestan'),
+    ('KK', 'Kristen Katolik'),
+    ('BD', 'Budha'),
+    ('HD', 'Hindu')
+)
 
 class Company(models.Model):
     companyCd = models.CharField(max_length=10, unique=True)
@@ -205,3 +229,17 @@ class AbsentPatternDtl (models.Model):
     timeOut = models.TimeField()
     breakIn = models.TimeField()
     breakOut = models.TimeField()
+
+class personal (models.Model):
+    name = models.CharField(max_length=100)
+    mobilePhone = models.CharField(max_length=15)
+    email = models.CharField(max_length=100)
+    identityType = models.CharField(max_length=1,choices=IDENTITY_CHOICES)
+    address = models.CharField(max_length=300)
+    city = models.CharField(max_length=100)
+    postal = models.CharField(max_length=10)
+    placeBirth = models.CharField(max_length=100)
+    dateBirth = models.DateField()
+    marital = models.CharField(max_length=1,choices=MARITAL_CHOICES)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    religion = models.CharField(max_length=1, choices=RELIGION_CHOICES)
