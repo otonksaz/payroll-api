@@ -358,6 +358,15 @@ class PersonalSerializer(serializers.ModelSerializer):
         eis = validated_data.pop('educationInfos')
         cis = validated_data.pop('careerInfos')
 
+        # get last id
+        lastPersonal = Personal.objects.all().order_by('id').last()
+        if not lastPersonal:
+            validated_data["id"] = 1
+        personalId = lastPersonal.id
+        personalIdInt = int(personalId)
+        newId = personalIdInt + 1
+        validated_data["id"] = newId
+
         personal = Personal.objects.create(**validated_data)
 
         for fi in fis:
@@ -430,6 +439,8 @@ class ApplicantSerializer(serializers.ModelSerializer):
                 currentPersonal = PersonalSerializer.update(PersonalSerializer(), currentPersonal, validated_data=newPersonal)
             else:
                 currentPersonal = PersonalSerializer.create(PersonalSerializer(), validated_data=newPersonal)
+        else:
+            currentPersonal = PersonalSerializer.create(PersonalSerializer(), validated_data=newPersonal)
 
         applicant = Applicant.objects.create(personal=currentPersonal, **validated_data)
         return applicant
