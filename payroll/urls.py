@@ -37,6 +37,17 @@ router.register(r'taxsetups', views.TaxSetupViewSet, base_name='taxsetup-view')
 router.register(r'taxsetupdtls', views.TaxSetupDtlViewSet, base_name='taxsetupdtl-view')
 router.register(r'absentpatterns', views.AbsentPatternViewSet, base_name='absentpattern-view')
 router.register(r'absentpatterndtls', views.AbsentPatternDtlViewSet, base_name='absentpatterndtl-view')
+router.register(r'institutions', views.InstitutionViewSet, base_name='institution-view')
+router.register(r'qualifications', views.QualificationViewSet, base_name='qualification-view')
+router.register(r'fieldofstudies', views.FieldOfStudyViewSet, base_name='fieldofstudy-view')
+router.register(r'companycareers', views.CompanyCareerViewSet, base_name='companycareer-view')
+router.register(r'familyinfos', views.FamilyInfoViewSet, base_name='familyinfo-view')
+router.register(r'educationinfos', views.EducationInfoViewSet, base_name='educationinfo-view')
+router.register(r'careerinfos', views.CareerInfoViewSet, base_name='careerinfo-view')
+router.register(r'personals', views.PersonalViewSet, base_name='personal-view')
+router.register(r'applicants', views.ApplicantViewSet, base_name='applicant-view')
+router.register(r'employees', views.EmployeeViewSet, base_name='employee-view')
+router.register(r'taxes', views.TaxViewSet, base_name='tax-view')
 
 
 urlpatterns = [

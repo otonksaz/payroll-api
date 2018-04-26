@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User, Group, Permission
+from django.db.models import Model
 from rest_framework import serializers
 from payroll.mainapp.models import *
 from django.db.transaction import atomic
@@ -70,6 +71,7 @@ class PayrollComponentDtlSerializer(serializers.ModelSerializer):
             }
         }
 
+
 class PayrollComponentSerializer(serializers.ModelSerializer):
     calcTypeDescs = serializers.CharField(source='get_calcType_display', read_only=True)
     payrollComponentDtls = PayrollComponentDtlSerializer(many=True)
@@ -132,6 +134,7 @@ class TimeOffSchemeSerializer(serializers.ModelSerializer):
         model = TimeOffScheme
         fields = '__all__'
 
+
 class OvertimeDtlSerializer(serializers.ModelSerializer):
     class Meta:
         model = OvertimeDtl
@@ -142,6 +145,7 @@ class OvertimeDtlSerializer(serializers.ModelSerializer):
                 "required": False,
             }
         }
+
 
 class OvertimeSerializer(serializers.ModelSerializer):
     overtimeDtls = OvertimeDtlSerializer(many=True)
@@ -173,6 +177,7 @@ class OvertimeSerializer(serializers.ModelSerializer):
                 OvertimeDtl.objects.create(**item)
         return instance
 
+
 class TaxSetupDtlSerializer(serializers.ModelSerializer):
     class Meta:
         model = TaxSetupDtl
@@ -183,6 +188,7 @@ class TaxSetupDtlSerializer(serializers.ModelSerializer):
                 "required": False,
             }
         }
+
 
 class TaxSetupSerializer(serializers.ModelSerializer):
     taxSetupDtls = TaxSetupDtlSerializer(many=True)
@@ -217,6 +223,7 @@ class TaxSetupSerializer(serializers.ModelSerializer):
                 item['taxSetup'] = instance
                 TaxSetupDtl.objects.create(**item)
         return instance
+
 
 class AbsentPatternDtlSerializer(serializers.ModelSerializer):
     class Meta:
@@ -265,3 +272,207 @@ class AbsentPatternSerializer(serializers.ModelSerializer):
                 item['absentPattern'] = instance
                 AbsentPatternDtl.objects.create(**item)
         return instance
+
+
+class InstitutionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Institution
+        fields = '__all__'
+
+
+class QualificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Qualification
+        fields = '__all__'
+
+
+class FieldOfStudySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FieldOfStudy
+        fields = '__all__'
+
+
+class FamilyInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FamilyInfo
+        fields = '__all__'
+        extra_kwargs = {
+            "personal": {
+                "read_only": False,
+                "required": False,
+            }
+        }
+
+
+class EducationInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EducationInfo
+        fields = '__all__'
+        extra_kwargs = {
+            "personal": {
+                "read_only": False,
+                "required": False,
+            }
+        }
+
+
+class CompanyCareerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CompanyCareer
+        fields = '__all__'
+
+
+class CareerInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CareerInfo
+        fields = '__all__'
+        extra_kwargs = {
+            "personal": {
+                "read_only": False,
+                "required": False,
+            }
+        }
+
+
+class PersonalSerializer(serializers.ModelSerializer):
+    familyInfos = FamilyInfoSerializer(many=True)
+    educationInfos = EducationInfoSerializer(many=True)
+    careerInfos = CareerInfoSerializer(many=True)
+
+    class Meta:
+        model = Personal
+        fields = '__all__'
+        extra_kwargs = {
+            "id": {
+                "read_only": False
+            }
+        }
+
+    def get_unique_together_validators(self):
+        #Overriding method to disable unique together checks
+        return []
+
+    @atomic()
+    def create(self, validated_data):
+        fis = validated_data.pop('familyInfos')
+        eis = validated_data.pop('educationInfos')
+        cis = validated_data.pop('careerInfos')
+
+        personal = Personal.objects.create(**validated_data)
+
+        for fi in fis:
+            FamilyInfo.objects.create(personal=personal, **fi)
+
+        for ei in eis:
+            EducationInfo.objects.create(personal=personal, **ei)
+
+        for ci in cis:
+            CareerInfo.objects.create(personal=personal, **ci)
+
+        return personal
+
+    @atomic()
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.mobilePhone = validated_data.get('mobilePhone', instance.mobilePhone)
+        instance.email = validated_data.get('email', instance.email)
+        instance.identityType = validated_data.get('identityType', instance.identityType)
+        instance.identityNo = validated_data.get('identityNo', instance.identityNo)
+        instance.address = validated_data.get('address', instance.address)
+        instance.city = validated_data.get('city', instance.city)
+        instance.postal = validated_data.get('postal', instance.postal)
+        instance.placeBirth = validated_data.get('placeBirth', instance.placeBirth)
+        instance.dateBirth = validated_data.get('dateBirth', instance.dateBirth)
+        instance.marital = validated_data.get('marital', instance.marital)
+        instance.gender = validated_data.get('gender', instance.gender)
+        instance.religion = validated_data.get('religion', instance.religion)
+        instance.save()
+
+        instance.familyInfos.all().delete()
+        instance.educationInfos.all().delete()
+        instance.careerInfos.all().delete()
+
+        fis = validated_data.get('familyInfos')
+        eis = validated_data.get('educationInfos')
+        cis = validated_data.get('careerInfos')
+
+        for fi in fis:
+            FamilyInfo.objects.create(personal=instance, **fi)
+
+        for ei in eis:
+            EducationInfo.objects.create(personal=instance, **ei)
+
+        for ci in cis:
+            CareerInfo.objects.create(personal=instance, **ci)
+
+        return instance
+
+
+class ApplicantSerializer(serializers.ModelSerializer):
+    personal = PersonalSerializer(required=True, partial=True)
+
+    class Meta:
+        model = Applicant
+        fields = '__all__'
+
+    @atomic()
+    def create(self, validated_data):
+        currentPersonal = Personal()
+        newPersonal = validated_data.pop('personal')
+        #print(newPersonal)
+
+        if newPersonal["id"] != 0:
+            currentPersonal = Personal.objects.filter(pk=newPersonal["id"]).first()
+            if currentPersonal is not None:
+                if currentPersonal.identityType != newPersonal["identityType"] or \
+                        currentPersonal.identityNo != newPersonal["identityNo"]:
+                    raise KeyError("Data personal is not valid")
+                currentPersonal = PersonalSerializer.update(PersonalSerializer(), currentPersonal, validated_data=newPersonal)
+            else:
+                currentPersonal = PersonalSerializer.create(PersonalSerializer(), validated_data=newPersonal)
+
+        applicant = Applicant.objects.create(personal=currentPersonal, **validated_data)
+        return applicant
+
+    @atomic()
+    def update(self, instance, validated_data):
+        currentPersonal = Personal()
+        newPersonal = validated_data.get('personal', None)
+        print(newPersonal)
+
+        if newPersonal["id"] != 0:
+            currentPersonal = Personal.objects.filter(pk=newPersonal["id"]).first()
+            if currentPersonal is not None:
+                if currentPersonal.identityType != newPersonal["identityType"] or \
+                        currentPersonal.identityNo != newPersonal["identityNo"]:
+                    raise KeyError("Data personal is not valid")
+                currentPersonal = PersonalSerializer.update(PersonalSerializer(), currentPersonal,
+                                                            validated_data=newPersonal)
+            #else:
+            #    currentPersonal = PersonalSerializer.create(PersonalSerializer(), validated_data=newPersonal)
+
+        instance.jobPosition = validated_data.get('jobPosition', instance.jobPosition)
+        instance.jobLevel = validated_data.get('jobLevel', instance.jobLevel)
+        instance.personal = currentPersonal
+        # instance.submittedDate = validated_data.get('name', instance.name)
+        instance.status = validated_data.get('status', instance.status)
+
+        return instance
+
+
+class EmployeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Employee
+        fields = '__all__'
+
+
+class TaxSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tax
+        fields = '__all__'
+
+
+class TaxCostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TaxCost
+        fields = '__all__'
