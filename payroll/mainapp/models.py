@@ -487,7 +487,7 @@ class Employee(models.Model):
     absentDeductCustom = models.IntegerField()
     absentPattern = models.ForeignKey(AbsentPattern, on_delete=models.PROTECT)
     isOvertime = models.BooleanField()
-    isOvertime = models.ForeignKey(Overtime, on_delete=models.PROTECT, null=True, blank=True)
+    overtime = models.ForeignKey(Overtime, on_delete=models.PROTECT, null=True, blank=True)
     payrollScheme = models.ForeignKey(PayrollScheme, on_delete=models.PROTECT)
     salary = models.DecimalField(max_digits=21, decimal_places=0)
     taxConfig = models.CharField(max_length=1, choices=TAXCONFIG_CHOICES)

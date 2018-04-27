@@ -472,6 +472,7 @@ class ApplicantSerializer(serializers.ModelSerializer):
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
+    applicant_data = ApplicantSerializer(source="applicant", read_only=True)
     class Meta:
         model = Employee
         fields = '__all__'
