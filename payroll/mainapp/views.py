@@ -141,12 +141,22 @@ class PersonalViewSet(viewsets.ModelViewSet):
 
 class ApplicantViewSet(viewsets.ModelViewSet):
     queryset = Applicant.objects.all()
-    serializer_class = ApplicantSerializer
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return ApplicantListSerializer
+        else:
+            return ApplicantSerializer
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
-    serializer_class = EmployeeSerializer
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return EmployeeListSerializer
+        else:
+            return EmployeeSerializer
 
 
 class TaxViewSet(viewsets.ModelViewSet):

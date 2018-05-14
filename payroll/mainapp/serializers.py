@@ -335,6 +335,10 @@ class CareerInfoSerializer(serializers.ModelSerializer):
 
 
 class PersonalSerializer(serializers.ModelSerializer):
+    identityTypeDescs = serializers.CharField(source='get_identityType_display', read_only=True)
+    maritalDescs = serializers.CharField(source='get_marital_display', read_only=True)
+    genderDescs = serializers.CharField(source='get_gender_display', read_only=True)
+    religionDescs = serializers.CharField(source='get_religion_display', read_only=True)
     familyInfos = FamilyInfoSerializer(many=True)
     educationInfos = EducationInfoSerializer(many=True)
     careerInfos = CareerInfoSerializer(many=True)
@@ -417,8 +421,23 @@ class PersonalSerializer(serializers.ModelSerializer):
         return instance
 
 
+class ApplicantListSerializer(serializers.ModelSerializer):
+    jobPositionDescs = serializers.CharField(source='jobPosition.name', read_only=True)
+    jobLevelDescs = serializers.CharField(source='jobLevel.name', read_only=True)
+    statusDescs = serializers.CharField(source='get_status_display', read_only=True)
+    personalName = serializers.CharField(source='personal.name', read_only=True)
+
+    class Meta:
+        model = Applicant
+        fields = '__all__'
+
+
 class ApplicantSerializer(serializers.ModelSerializer):
+    jobPositionDescs = serializers.CharField(source='jobPosition.name', read_only=True)
+    jobLevelDescs = serializers.CharField(source='jobLevel.name', read_only=True)
+    statusDescs = serializers.CharField(source='get_status_display', read_only=True)
     personal = PersonalSerializer(required=True, partial=True)
+    personalName = serializers.CharField(source='personal.name', read_only=True)
 
     class Meta:
         model = Applicant
@@ -471,8 +490,35 @@ class ApplicantSerializer(serializers.ModelSerializer):
         return instance
 
 
+
+class EmployeeListSerializer(serializers.ModelSerializer):
+    jobPositionDescs = serializers.CharField(source='jobPosition.name', read_only=True)
+    jobLevelDescs = serializers.CharField(source='jobLevel.name', read_only=True)
+    statusDescs = serializers.CharField(source='get_status_display', read_only=True)
+    attendanceTypeDescs = serializers.CharField(source='get_attendanceType_display', read_only=True)
+    absentDeductDescs = serializers.CharField(source='get_absentDeduct_display', read_only=True)
+    taxConfigDescs = serializers.CharField(source='get_taxConfig_display', read_only=True)
+    salaryTypeDescs = serializers.CharField(source='get_salaryType_display', read_only=True)
+    personalName = serializers.CharField(source='applicant.personal.name', read_only=True)
+
+    class Meta:
+        model = Employee
+        fields = '__all__'
+
+
 class EmployeeSerializer(serializers.ModelSerializer):
     applicant_data = ApplicantSerializer(source="applicant", read_only=True)
+    jobPositionDescs = serializers.CharField(source='jobPosition.name', read_only=True)
+    jobLevelDescs = serializers.CharField(source='jobLevel.name', read_only=True)
+    statusDescs = serializers.CharField(source='get_status_display', read_only=True)
+    attendanceTypeDescs = serializers.CharField(source='get_attendanceType_display', read_only=True)
+    absentDeductDescs = serializers.CharField(source='get_absentDeduct_display', read_only=True)
+    absentPattern_data = AbsentPatternSerializer(source='absentPattern', read_only=True)
+    payrollScheme_data = PayrollSchemeSerializer(source='payrollScheme', read_only=True)
+    timeOffScheme_data = TimeOffSchemeSerializer(source='timeOffScheme', read_only=True)
+    taxConfigDescs = serializers.CharField(source='get_taxConfig_display', read_only=True)
+    salaryTypeDescs = serializers.CharField(source='get_salaryType_display', read_only=True)
+
     class Meta:
         model = Employee
         fields = '__all__'

@@ -413,7 +413,7 @@ class Institution(models.Model):
 
 
 class Qualification(models.Model):
-    qualificatioinCd = models.CharField(max_length=10, unique=True)
+    qualificationCd = models.CharField(max_length=10, unique=True)
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -489,6 +489,7 @@ class Employee(models.Model):
     isOvertime = models.BooleanField()
     overtime = models.ForeignKey(Overtime, on_delete=models.PROTECT, null=True, blank=True)
     payrollScheme = models.ForeignKey(PayrollScheme, on_delete=models.PROTECT)
+    timeOffScheme = models.ForeignKey(TimeOffScheme, on_delete=models.PROTECT)
     salary = models.DecimalField(max_digits=21, decimal_places=0)
     taxConfig = models.CharField(max_length=1, choices=TAXCONFIG_CHOICES)
     salaryType = models.CharField(max_length=1, choices=TYPEOFSALARY_CHOICES)
