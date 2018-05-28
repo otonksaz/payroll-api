@@ -452,6 +452,8 @@ class CompanyCareer(models.Model):
 
 
 class CareerInfo(models.Model):
+    periodStart = models.IntegerField()
+    periodEnd = models.IntegerField()
     personal = models.ForeignKey(Personal, related_name="careerInfos")
     companyCareer = models.ForeignKey(CompanyCareer, on_delete=models.PROTECT)
     jobPosition = models.ForeignKey(JobPosition, on_delete=models.PROTECT)
