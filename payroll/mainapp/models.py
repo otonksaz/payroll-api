@@ -433,6 +433,7 @@ class EducationInfo(models.Model):
     periodStart = models.IntegerField()
     periodEnd = models.IntegerField()
     institution = models.ForeignKey(Institution, on_delete=models.PROTECT)
+    qualification = models.ForeignKey(Qualification, on_delete=models.PROTECT)
     fieldOfStudy = models.ForeignKey(FieldOfStudy, on_delete=models.PROTECT)
     gpa = models.FloatField()
 
