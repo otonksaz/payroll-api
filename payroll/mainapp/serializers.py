@@ -293,6 +293,11 @@ class FieldOfStudySerializer(serializers.ModelSerializer):
 
 
 class FamilyInfoSerializer(serializers.ModelSerializer):
+    genderDescs = serializers.CharField(source='get_gender_display', read_only=True)
+    relationshipDescs = serializers.CharField(source='get_relationship_display', read_only=True)
+    maritalDescs = serializers.CharField(source='get_marital_display', read_only=True)
+    occupationDescs = serializers.CharField(source='get_occupation_display', read_only=True)
+
     class Meta:
         model = FamilyInfo
         fields = '__all__'
@@ -305,6 +310,10 @@ class FamilyInfoSerializer(serializers.ModelSerializer):
 
 
 class EducationInfoSerializer(serializers.ModelSerializer):
+    institutionDescs = serializers.CharField(source='institution.name', read_only=True)
+    qualificationDescs = serializers.CharField(source='qualification.name', read_only=True)
+    fieldOfStudyDescs = serializers.CharField(source='fieldOfStudy.name', read_only=True)
+
     class Meta:
         model = EducationInfo
         fields = '__all__'
@@ -323,6 +332,10 @@ class CompanyCareerSerializer(serializers.ModelSerializer):
 
 
 class CareerInfoSerializer(serializers.ModelSerializer):
+    jobPositionDescs = serializers.CharField(source='jobPosition.name', read_only=True)
+    jobLevelDescs = serializers.CharField(source='jobLevel.name', read_only=True)
+    companyCareerDescs = serializers.CharField(source='companyCareer.name', read_only=True)
+
     class Meta:
         model = CareerInfo
         fields = '__all__'
